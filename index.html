@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Live Clock</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #a1c4fd, #c2e9fb);
+      background-size: 400% 400%;
+      animation: gradientBG 12s ease infinite;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    h1 {
+      font-size: 6rem;
+      margin: 0;
+      text-shadow: 0px 0px 20px rgba(255,255,255,0.8);
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    h2 {
+      font-size: 2rem;
+      font-weight: 300;
+      margin: 10px 0 0 0;
+      opacity: 0.9;
+      animation: fadeIn 1.5s ease-in-out;
+    }
+
+    p {
+      font-size: 1.5rem;
+      font-weight: 400;
+      margin-top: 15px;
+      opacity: 0.8;
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <h1 id="clock">--:--:--</h1>
+  <h2 id="date">Loading date...</h2>
+  <p id="greeting">Hello!</p>
+
+  <script>
+    function updateClock() {
+      const now = new Date();
+
+      // Time
+      document.getElementById('clock').innerText =
+        now.toLocaleTimeString('en-US', { hour12: true });
+
+      // Date
+      document.getElementById('date').innerText =
+        now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+
+      // Greeting
+      const hour = now.getHours();
+      let greeting = "Hello!";
+      if (hour < 12) {
+        greeting = "☀️ Good Morning!";
+      } else if (hour < 18) {
+        greeting = "🌤️ Good Afternoon!";
+      } else {
+        greeting = "🌙 Good Evening!";
+      }
+      document.getElementById('greeting').innerText = greeting;
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock();
+  </script>
+</body>
+</html>
